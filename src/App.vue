@@ -1,13 +1,13 @@
 <template>
   <div class="app font-monospace">
     <div class="content">
-      <AppInfo/>
+      <AppInfo :appInfo="movieList.length"  :favoriteMovies="movieList.filter(fav => fav.favorite).length"/>
       <div class="search-info">
         <searchPanel/>
         <appPanel/>
       </div>
-      <MovieList/>
-      <MovieForm/>
+      <MovieList :movieList="movieList"/>
+      <MovieForm @movie-added="loadMovies"/>
     </div>
   </div>
 </template>
@@ -21,16 +21,25 @@ import MovieForm from './components/MovieForm.vue';
 export default{
   data() {
     return {
-      
+      movieList: []
     }
   },
-  components:{
+  components: {
     AppInfo,
     searchPanel,
     appPanel,
     MovieList,
     MovieForm
-  }
+  },
+  methods: {
+    loadMovies(){
+      this.movieList = JSON.parse(localStorage.getItem("movies")) || []
+    }
+  },
+
+  mounted() {
+    this.loadMovies()
+  },
 }
 </script>
 

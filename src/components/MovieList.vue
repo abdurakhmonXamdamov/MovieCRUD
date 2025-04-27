@@ -1,38 +1,20 @@
 <template>
     <ul class="movie-list list-group">
-      <MoiveListItem v-for="(movie, index) in movieList" :movie="movie"/>
+      <MoiveListItem v-for="(movie, index) in movieList" :movie="movie" :key="index"/>
     </ul>
 </template>
 <script>
 import MoiveListItem from './movieListitem/MoiveListItem.vue';
 
 export default {
-  data() {
-    return {
-      movieList: JSON.parse(localStorage.getItem('movies')) || [
-        {
-          movie_name: 'Me before you',
-          views: 1000,
-          like: true,
-          favorite: true
-        },
-        {
-          movie_name: 'Worth to walk',
-          views: 834,
-          like: false,
-          favorite: true
-        },
-        {
-          movie_name: 'Goddam Love',
-          views: 300,
-          like: false,
-          favorite: false,
-        },
-      ]
-    }
-  },
   components:{
     MoiveListItem
+  },
+  props: {
+    movieList: {
+      type: Array,
+      required: true
+    }
   }
 }
 </script>

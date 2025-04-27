@@ -1,6 +1,7 @@
 <template>
-    <li class="list-group-item d-flex justify-content-between align-items-center">
-    <span class="list-group-item-label">{{ movie.movie_name }}</span>
+    <li class="list-group-item d-flex justify-content-between align-items-center"
+    :class="[{favorite: movie.favorite}, {like: movie.like}]">
+    <span class="list-group-item-label" @click="liked(movie.id)">{{ movie.movie_name }}</span>
     <input type="number" class="list-group-item-input" :value="movie.views">
     
     <div class="d-flex justify-content-center align-items-center">
@@ -21,6 +22,15 @@ export default {
     movie: {
       type: Object,
       required: true
+    },
+    index: {
+      type: Number,
+      required: true
+    }
+  },
+  methods: {
+    liked(something){
+      console.log(something);
     }
   }
 }

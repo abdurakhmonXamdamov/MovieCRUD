@@ -1,16 +1,36 @@
 <template>
-  <div class="list-group">
-    <ul class="movie-list">
-      <MoiveListItem/>
-      <MoiveListItem/>
-      <MoiveListItem/>
+    <ul class="movie-list list-group">
+      <MoiveListItem v-for="(movie, index) in movieList" :movie="movie"/>
     </ul>
-  </div>
 </template>
 <script>
 import MoiveListItem from './movieListitem/MoiveListItem.vue';
 
 export default {
+  data() {
+    return {
+      movieList: JSON.parse(localStorage.getItem('movies')) || [
+        {
+          movie_name: 'Me before you',
+          views: 1000,
+          like: true,
+          favorite: true
+        },
+        {
+          movie_name: 'Worth to walk',
+          views: 834,
+          like: false,
+          favorite: true
+        },
+        {
+          movie_name: 'Goddam Love',
+          views: 300,
+          like: false,
+          favorite: false,
+        },
+      ]
+    }
+  },
   components:{
     MoiveListItem
   }
@@ -22,7 +42,7 @@ export default {
     list-style: none;
   }
 
-  .list-group{
+  .movie-list{
     margin-top: 2rem;
     padding: 1.5rem;
     background: #fcfaf5;

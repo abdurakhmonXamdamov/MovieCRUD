@@ -1,6 +1,6 @@
 <template>
     <ul class="movie-list list-group">
-      <MoiveListItem v-for="(movie, index) in movieList" :movie="movie" :key="index"/>
+      <MoiveListItem v-for="(movie, index) in movieList" :movie="movie" :key="index" @clickedID="$emit('ItemID', movie.id)"/>
     </ul>
 </template>
 <script>

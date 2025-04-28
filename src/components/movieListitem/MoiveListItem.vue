@@ -1,12 +1,26 @@
 <template>
     <li class="list-group-item d-flex justify-content-between align-items-center"
     :class="[{favorite: movie.favorite}, {like: movie.like}]">
-    <span class="list-group-item-label" @click="liked(movie.id)">{{ movie.movie_name }}</span>
-    <input type="number" class="list-group-item-input" :value="movie.views">
+        <div v-if="isEditing">
+          <input  v-model="editedName" class="list-group-item-input" />
+        </div>
+
+        <div v-else>
+          <span class="list-group-item-label" @click="liked()">{{ movie.movie_name }}</span>
+        </div>
     
     <div class="d-flex justify-content-center align-items-center">
-        <button type="button" class="btn-pen btn-sm">
-            <i class="fas fa-pen"></i>
+        <div v-if="isEditing">
+          <input type="number" v-model="editedViews" class="list-group-item-input" />
+        </div>
+        <div v-else>
+          <input type="number" class="list-group-item-input" :value="movie.views" readonly />
+        </div>
+        <button v-if="isEditing" type="button" class="btn-pen btn-sm">
+          <i class="fas fa-check"></i>
+        </button>
+        <button v-else type="button" class="btn-pen btn-sm" @click="toggleEditing">
+          <i  class="fas fa-pen"></i>
         </button>
 
         <button type="button" class="btn-trash btn-sm">
@@ -18,19 +32,25 @@
 </template>
 <script>
 export default {
+  data() {
+    return {
+      isEditing: false,
+      editedName: this.movie.movie_name,
+      editedViews: this.movie.views
+    }
+  },
   props: {
     movie: {
       type: Object,
       required: true
     },
-    index: {
-      type: Number,
-      required: true
-    }
   },
   methods: {
-    liked(something){
-      console.log(something);
+    liked(){
+      this.$emit('clickedID', this.movie.id);
+    },
+    toggleEditing(){
+      this.isEditing = !this.isEditing
     }
   }
 }
@@ -81,7 +101,7 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .list-group-item .btn-pen{
-    color: #e09f3e;
+    color: #59efab;
 }
 
 .list-group-item .btn-trash{
@@ -105,9 +125,9 @@ input[type="number"]::-webkit-inner-spin-button {
     transform: translateX(0);
 }
 
-.list-group-item.favorite .list-group-item-label,
-.list-group-item.favorite .list-group-item-input{
-    color: #e09f3e;
+.list-group-item.like .list-group-item-label,
+.list-group-item.like .list-group-item-input{
+    color: #59efab;
 }
 
 </style>

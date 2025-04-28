@@ -16,14 +16,14 @@
         <div v-else>
           <input type="number" class="list-group-item-input" :value="movie.views" readonly />
         </div>
-        <button v-if="isEditing" type="button" class="btn-pen btn-sm">
+        <button v-if="isEditing" type="button" class="btn-pen btn-sm" @click="saveMovies">
           <i class="fas fa-check"></i>
         </button>
-        <button v-else type="button" class="btn-pen btn-sm" @click="toggleEditing">
+        <button v-else type="button" class="btn-pen btn-sm" @click="editing">
           <i  class="fas fa-pen"></i>
         </button>
 
-        <button type="button" class="btn-trash btn-sm">
+        <button type="button" class="btn-trash btn-sm" @click="$emit('onRemove', this.movie.id)">
             <i class="fas fa-trash"></i>
         </button>
             <i class="fas fa-star"></i>
@@ -49,8 +49,14 @@ export default {
     liked(){
       this.$emit('clickedID', this.movie.id);
     },
-    toggleEditing(){
-      this.isEditing = !this.isEditing
+    editing(){
+      this.isEditing = true
+    },
+    saveMovies(){
+      this.movie.movie_name = this.editedName 
+      this.movie.views = this.editedViews 
+      this.$emit('updateMovie', this.movie)
+      this.isEditing = false
     }
   }
 }
@@ -101,28 +107,28 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .list-group-item .btn-pen{
-    color: #59efab;
+  color: #59efab;
 }
 
 .list-group-item .btn-trash{
-    color: #e5380e;
+  color: #e5380e;
 }
 
 .list-group-item .fa-star{
-    width: 35px;
-    height: 35px;
-    text-align: center;
-    line-height: 35px;
-    color: #ffd700;
-    font-size: 16px;
-    transition: .3s all;
-    transform: translateX(30px);
-    opacity: 0;
+  width: 35px;
+  height: 35px;
+  text-align: center;
+  line-height: 35px;
+  color: #ffd700;
+  font-size: 16px;
+  transition: .3s all;
+  transform: translateX(30px);
+  opacity: 0;
 }
 
 .list-group-item.like .fa-star{
-    opacity: 1;
-    transform: translateX(0);
+  opacity: 1;
+  transform: translateX(0);
 }
 
 .list-group-item.like .list-group-item-label,

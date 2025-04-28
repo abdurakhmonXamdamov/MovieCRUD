@@ -1,12 +1,12 @@
 <template>
   <div class="app font-monospace">
     <div class="content">
-      <AppInfo :appInfo="movieList.length" :favoriteMovies="movieList.filter(fav => fav.favorite).length"/>
+      <AppInfo :appInfo="movieList.length" :favoriteMovies="movieList.filter(fav => fav.like).length"/>
       <div class="search-info">
         <searchPanel/>
         <appPanel/>
       </div>
-      <MovieList :movieList="movieList" @ItemID="gettingId"/>
+      <MovieList :movieList="movieList" @ItemID="gettingId" @updateMovie="updateMovie" @onRemove="onRemoveHandeler"/>
       <MovieForm @movie-added="loadMovies"/>
     </div>
   </div>
@@ -43,7 +43,23 @@ export default{
         return item
       })
       localStorage.setItem("movies", JSON.stringify(this.movieList));
+    },
+    updateMovie(updatedMovie) {
+      this.movieList = this.movieList.map(item => {
+        if (item.id === updatedMovie.id) {
+          return { ...item, ...updatedMovie };
+        }
+        return item;
+      });
+      
+      localStorage.setItem("movies", JSON.stringify(this.movieList));
+    },
+    onRemoveHandeler(id){
+      this.movieList = this.movieList.filter(item => item.id != id)
+
+      localStorage.setItem("movies", JSON.stringify(this.movieList));
     }
+
   },
 
   mounted() {

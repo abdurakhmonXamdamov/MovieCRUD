@@ -1,17 +1,58 @@
 <template>
   <div class="btn-group">
-    <button type="button" class="btn btn-dark">Barcha kinolar</button>
-    <button type="button" class="btn btn-outline-dark">Mashxur kinolar</button>
-    <button type="button" class="btn btn-outline-dark">Eng ko'p ko'rilgan kinolar</button>
+    <button
+      v-for="(item, index) in filterBtns"
+      :key="index"
+      type="button"
+      class="btn"
+      @click="filterController(item.btnLabel)"
+      :class="[filterName == item.btnLabel ? 'btn-dark' : 'btn-outline-dark']"
+    >
+      {{ item.title }}
+    </button>
   </div>
 </template>
 <script>
 export default {
-  
+  props: {
+    updateFilter: {
+      type: Function,
+      required: true,
+    },
+    filterName: {
+      type: String,
+      required: true,
+    },
+  },
+  data() {
+    return {
+      filter: 'all',
+      filterBtns: [
+        {
+          title: 'Barcha kinolar',
+          btnLabel: 'all'
+        },
+        {
+          title: 'Mashxur kinolar',
+          btnLabel: 'popular'
+        },
+        {
+          title: "Eng ko'p ko'rilgan kinolar",
+          btnLabel: 'mostWatched'
+        },
+      ]
+    }
+  },
+  methods: {
+    filterController(filter) {
+      this.filter = filter
+      this.updateFilter(this.filter)
+    },
+  },
 }
 </script>
 <style scoped>
-  .btn-group{
-    margin-top: 1rem;
-  }
+.btn-group {
+  margin-top: 1rem;
+}
 </style>

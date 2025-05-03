@@ -1,5 +1,5 @@
 <template>
-  <div class="movie-form">
+  <Box class="movie-form">
     <div class="h3">Yange kino qo'shish</div>
     <form @submit.prevent>
       <div class="d-flex align-items-center">
@@ -17,12 +17,16 @@
           v-model="newMovie.views"
           required
         />
-        <button class="btn btn-outline-primary" @click="addMovieToStore">Qo‘shish</button>
+        <PrimaryButton class="btn-outline-primary" @click="addMovieToStore">Qo‘shish</PrimaryButton>
       </div>
     </form>
-  </div>
+  </Box>
 </template>
 <script>
+
+import PrimaryButton from '@/UI_components/PrimaryButton.vue'
+import Box from '@/UI_components/Box.vue'
+
 export default {
   data() {
     return {
@@ -33,7 +37,6 @@ export default {
       }
     }
   },
-
   methods: {
     addMovieToStore(){
 
@@ -62,9 +65,5 @@ export default {
 <style scoped>
 .movie-form {
   margin-top: 2rem;
-  padding: 1.5rem;
-  background: #fcfaf5;
-  border-radius: 4px;
-  box-shadow: 15px 15px 15px rgba(0, 0, 0, 0.15);
 }
 </style>

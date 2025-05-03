@@ -5,10 +5,10 @@
         :appInfo="movieList.length"
         :favoriteMovies="movieList.filter((fav) => fav.like).length"
       />
-      <div class="search-info">
+      <Box class="search-info">
         <searchPanel :termController="termController" />
         <appPanel :updateFilter="updateFilter" :filterName="filter" />
-      </div>
+      </Box>
       <MovieList
         :movieList="filterMovies(searchControl(movieList, searchTerm), filter)"
         @ItemID="gettingId"
@@ -26,6 +26,7 @@ import searchPanel from './components/search-panel.vue'
 import appPanel from './components/app-panel.vue'
 import MovieList from './components/MovieList.vue'
 import MovieForm from './components/MovieForm.vue'
+import Box from './UI_components/Box.vue'
 export default {
   data() {
     return {
@@ -74,7 +75,6 @@ export default {
         return arr
       }
 
-      console.log(arr)
       return arr.filter((item) =>
         item.movie_name.toLowerCase().includes(this.searchTerm.toLowerCase()),
       )
@@ -126,9 +126,5 @@ export default {
 
 .search-info {
   margin-top: 2rem;
-  padding: 1.5rem;
-  background: #fcfaf5;
-  border-radius: 4px;
-  box-shadow: 15px 15px 15px rgba(0, 0, 0, 0.15);
 }
 </style>
